@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -26,6 +25,7 @@ public class ConditionLoader {
     private static final Logger LOGGER = Pullup.getLogger();
 
     public static void load(String name) {
+        prepareDir();
         HashSet<String> files = new HashSet<>(List.of(getFiles()));
 
         if (files.contains(name)) {
@@ -50,7 +50,9 @@ public class ConditionLoader {
 
     @NotNull
     public static String[] getFiles() {
-        return Objects.requireNonNull(PATH.toFile().list());
+        prepareDir();
+        String[] output = PATH.toFile().list();
+        return output == null ? new String[0] : output;
     }
 
     private static Condition parseCondition(JsonElement element) {
@@ -99,6 +101,7 @@ public class ConditionLoader {
     }
 
     public static void loadDefault() {
+        prepareDir();
         CONDITIONS.clear();
         CONFIG.set("loadSet", "default");
         String json;
@@ -135,6 +138,8 @@ public class ConditionLoader {
     }
 
     public static void writeDefaultConditions() {
+        prepareDir();
+
         try {
             Files.copy(
                 Objects.requireNonNull(ConditionLoader.class.getClassLoader().getResourceAsStream("default_condition.json")),
@@ -144,6 +149,16 @@ public class ConditionLoader {
         } catch (IOException e) {
             LOGGER.warn("Can not generate example condition set.");
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void prepareDir() {
+        if (!Files.exists(PATH)) {
+            try {
+                Files.createDirectories(PATH);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

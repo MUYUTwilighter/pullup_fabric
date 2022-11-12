@@ -26,7 +26,7 @@ public class Command {
         root.then(buildLoad());
 
         root.then(CommandManager.literal("enable").executes(Command::executeEnable));
-        root.then(CommandManager.literal("enable").executes(Command::executeDisable));
+        root.then(CommandManager.literal("disable").executes(Command::executeDisable));
 
         dispatcher.register(root);
     }

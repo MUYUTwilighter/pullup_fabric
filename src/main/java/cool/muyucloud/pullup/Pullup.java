@@ -25,6 +25,9 @@ public class Pullup implements ModInitializer {
         LOGGER.info("Registering arguments.");
         Registry.registerArguments();
 
+        LOGGER.info("Registering operators.");
+        Registry.registerOperators();
+
         LOGGER.info("Registering events.");
         ServerLifecycleEvents.SERVER_STOPPING.register(this::onServerStopping);
 
@@ -38,6 +41,9 @@ public class Pullup implements ModInitializer {
         }
         ConditionLoader.load(loadSet);
         LOGGER.info(String.format("Loaded condition set %s.", loadSet));
+
+        LOGGER.info("Generating example condition set.");
+        ConditionLoader.writeDefaultConditions();
     }
 
     public static Logger getLogger() {
@@ -51,5 +57,7 @@ public class Pullup implements ModInitializer {
     public void onServerStopping(MinecraftServer server) {
         LOGGER.info("Dumping current config into file.");
         CONFIG.save();
+        LOGGER.info("Generating example condition set.");
+        ConditionLoader.writeDefaultConditions();
     }
 }

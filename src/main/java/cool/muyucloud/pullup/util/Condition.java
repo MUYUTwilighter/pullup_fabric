@@ -5,6 +5,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
+import net.objecthunter.exp4j.operator.Operator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -40,6 +41,9 @@ public class Condition {
         for (Identifier id : this.arguments) {
             String argument = String.format("%s_%s", id.getNamespace(), id.getPath());
             builder.variable(argument);
+            for (Operator operator : Registry.OPERATOR.getAll()) {
+                builder.operator(operator);
+            }
         }
         return builder.build();
     }

@@ -1,0 +1,104 @@
+[
+    {
+        "name": "minimum",
+        "sound": "pullup:minimum",
+        "check_delay": 20,
+        "arguments": [
+            "pullup:relative_height"
+        ],
+        "expressions": [
+            "0.5 - abs(pullup_relative_height - 3)"
+        ]
+    },
+    {
+        "name": "5",
+        "sound": "pullup:5",
+        "check_delay": 20,
+        "arguments": [
+            "pullup:relative_height"
+        ],
+        "expressions": [
+            "1 - abs(pullup_relative_height - 5)"
+        ]
+    },
+    {
+        "name": "10",
+        "sound": "pullup:10",
+        "check_delay": 20,
+        "arguments": [
+            "pullup:relative_height"
+        ],
+        "expressions": [
+            "1 - abs(pullup_relative_height - 10)"
+        ]
+    },
+    {
+        "name": "20",
+        "sound": "pullup:20",
+        "check_delay": 20,
+        "arguments": [
+            "pullup:relative_height"
+        ],
+        "expressions": [
+            "1 - abs(pullup_relative_height - 20)"
+        ]
+    },
+    {
+        "name": "30",
+        "sound": "pullup:30",
+        "check_delay": 20,
+        "arguments": [
+            "pullup:relative_height"
+        ],
+        "expressions": [
+            "1 - abs(pullup_relative_height - 30)"
+        ]
+    },
+    {
+        "name": "40",
+        "sound": "pullup:40",
+        "check_delay": 20,
+        "arguments": [
+            "pullup:relative_height"
+        ],
+        "expressions": [
+            "1 - abs(pullup_relative_height - 40)"
+        ]
+    },
+    {
+        "name": "50",
+        "sound": "pullup:50",
+        "check_delay": 20,
+        "arguments": [
+            "pullup:relative_height"
+        ],
+        "expressions": [
+            "1 - abs(pullup_relative_height - 50)"
+        ]
+    },
+    {
+        "name": "terrain_ahead",
+        "sound": "pullup:terrain_ahead",
+        "check_delay": 20,
+        "arguments": [
+            "pullup:distance_ahead",
+            "pullup:pitch"
+        ],
+        "expressions": [
+            "(abs(pullup_distance_ahead) < 20) & (abs(pullup_distance_ahead) > 5) & (abs(pullup_pitch) < 20)"
+        ]
+    },
+    {
+        "name": "sink_rate",
+        "sound": "pullup:sink_rate",
+        "check_delay": 20,
+        "arguments": [
+            "pullup:vertical_speed",
+            "pullup:relative_height",
+            "pullup:pitch"
+        ],
+        "expressions": [
+            "(pullup_relative_height > 5) & (pullup_vertical_speed * 20 > pullup_relative_height) | (pullup_vertical_speed > 0.5) | (pullup_pitch > 45)"
+        ]
+    }
+]

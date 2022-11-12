@@ -4,13 +4,17 @@ import com.google.gson.*;
 import cool.muyucloud.pullup.Pullup;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -95,8 +99,31 @@ public class ConditionLoader {
     }
 
     public static void loadDefault() {
-        CONFIG.set("loadSet", "default");
         CONDITIONS.clear();
+        CONFIG.set("loadSet", "default");
+        String json;
+        JsonArray array;
+
+        try {
+            json = IOUtils.toString(
+                Objects.requireNonNull(
+                    ConditionLoader.class.getClassLoader()
+                        .getResourceAsStream("default_condition.json")),
+                StandardCharsets.UTF_8);
+            array = (new Gson()).fromJson(json, JsonArray.class);
+        } catch (Exception e) {
+            throw new NullPointerException("Can not read default condition file!");
+        }
+
+        String spaceName = "pullup";
+        for (int i = 0; i < array.size(); ++i) {
+            Condition condition = parseCondition(array.get(i));
+            if (condition == null) {
+                LOGGER.warn("Problems occurred during analyzing conditions in default condition file.");
+                continue;
+            }
+            CONDITIONS.register(new Identifier(String.format("%s:%s", spaceName, condition.getName())), condition);
+        }
     }
 
     public static String[] parseJsonArrayAsString(JsonArray array) {
@@ -105,5 +132,18 @@ public class ConditionLoader {
             output[i] = array.get(i).getAsString();
         }
         return output;
+    }
+
+    public static void writeDefaultConditions() {
+        try {
+            Files.copy(
+                Objects.requireNonNull(ConditionLoader.class.getClassLoader().getResourceAsStream("default_condition.json")),
+                PATH.resolve("example.json"),
+                StandardCopyOption.REPLACE_EXISTING
+            );
+        } catch (IOException e) {
+            LOGGER.warn("Can not generate example condition set.");
+            throw new RuntimeException(e);
+        }
     }
 }

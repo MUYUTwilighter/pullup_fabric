@@ -5,5 +5,320 @@
                 "name": "pullup:test"
             }
         ]
+    },
+    "10": {
+        "sounds": [
+            {
+                "name": "pullup:10"
+            }
+        ]
+    },
+    "100": {
+        "sounds": [
+            {
+                "name": "pullup:100"
+            }
+        ]
+    },
+    "1000": {
+        "sounds": [
+            {
+                "name": "pullup:1000"
+            }
+        ]
+    },
+    "20": {
+        "sounds": [
+            {
+                "name": "pullup:20"
+            }
+        ]
+    },
+    "200": {
+        "sounds": [
+            {
+                "name": "pullup:200"
+            }
+        ]
+    },
+    "2500": {
+        "sounds": [
+            {
+                "name": "pullup:2500"
+            }
+        ]
+    },
+    "30": {
+        "sounds": [
+            {
+                "name": "pullup:30"
+            }
+        ]
+    },
+    "300": {
+        "sounds": [
+            {
+                "name": "pullup:300"
+            }
+        ]
+    },
+    "40": {
+        "sounds": [
+            {
+                "name": "pullup:40"
+            }
+        ]
+    },
+    "400": {
+        "sounds": [
+            {
+                "name": "pullup:400"
+            }
+        ]
+    },
+    "5": {
+        "sounds": [
+            {
+                "name": "pullup:5"
+            }
+        ]
+    },
+    "50": {
+        "sounds": [
+            {
+                "name": "pullup:50"
+            }
+        ]
+    },
+    "500": {
+        "sounds": [
+            {
+                "name": "pullup:500"
+            }
+        ]
+    },
+    "60": {
+        "sounds": [
+            {
+                "name": "pullup:60"
+            }
+        ]
+    },
+    "70": {
+        "sounds": [
+            {
+                "name": "pullup:70"
+            }
+        ]
+    },
+    "adjust_vertical_speed": {
+        "sounds": [
+            {
+                "name": "pullup:adjust_vertical_speed"
+            }
+        ]
+    },
+    "clear_conflict": {
+        "sounds": [
+            {
+                "name": "pullup:clear_conflict"
+            }
+        ]
+    },
+    "climb": {
+        "sounds": [
+            {
+                "name": "pullup:climb"
+            }
+        ]
+    },
+    "climb_now": {
+        "sounds": [
+            {
+                "name": "pullup:climb_now"
+            }
+        ]
+    },
+    "crossing_climb": {
+        "sounds": [
+            {
+                "name": "pullup:crossing_climb"
+            }
+        ]
+    },
+    "crossing_descent": {
+        "sounds": [
+            {
+                "name": "pullup:crossing_descent"
+            }
+        ]
+    },
+    "descent": {
+        "sounds": [
+            {
+                "name": "pullup:descent"
+            }
+        ]
+    },
+    "descent_now": {
+        "sounds": [
+            {
+                "name": "pullup:descent_now"
+            }
+        ]
+    },
+    "dh": {
+        "sounds": [
+            {
+                "name": "pullup:dh"
+            }
+        ]
+    },
+    "dont_sink": {
+        "sounds": [
+            {
+                "name": "pullup:dont_sink"
+            }
+        ]
+    },
+    "glide_slope": {
+        "sounds": [
+            {
+                "name": "pullup:glide_slope"
+            }
+        ]
+    },
+    "go_around": {
+        "sounds": [
+            {
+                "name": "pullup:go_around"
+            }
+        ]
+    },
+    "increase_climb": {
+        "sounds": [
+            {
+                "name": "pullup:increase_climb"
+            }
+        ]
+    },
+    "increase_descent": {
+        "sounds": [
+            {
+                "name": "pullup:increase_descent"
+            }
+        ]
+    },
+    "maintain_vertical_speed": {
+        "sounds": [
+            {
+                "name": "pullup:maintain_vertical_speed"
+            }
+        ]
+    },
+    "minimum": {
+        "sounds": [
+            {
+                "name": "pullup:minimum"
+            }
+        ]
+    },
+    "monitor_radar_display": {
+        "sounds": [
+            {
+                "name": "pullup:monitor_radar_display"
+            }
+        ]
+    },
+    "monitor_vertical_speed": {
+        "sounds": [
+            {
+                "name": "pullup:monitor_vertical_speed"
+            }
+        ]
+    },
+    "obstacle_ahead": {
+        "sounds": [
+            {
+                "name": "pullup:obstacle_ahead"
+            }
+        ]
+    },
+    "pullup": {
+        "sounds": [
+            {
+                "name": "pullup:pullup"
+            }
+        ]
+    },
+    "retard": {
+        "sounds": [
+            {
+                "name": "pullup:retard"
+            }
+        ]
+    },
+    "sink_rate": {
+        "sounds": [
+            {
+                "name": "pullup:sink_rate"
+            }
+        ]
+    },
+    "terrain": {
+        "sounds": [
+            {
+                "name": "pullup:terrain"
+            }
+        ]
+    },
+    "terrain_ahead": {
+        "sounds": [
+            {
+                "name": "pullup:terrain_ahead"
+            }
+        ]
+    },
+    "too_low_flaps": {
+        "sounds": [
+            {
+                "name": "pullup:too_low_flaps"
+            }
+        ]
+    },
+    "too_low_gear": {
+        "sounds": [
+            {
+                "name": "pullup:too_low_gear"
+            }
+        ]
+    },
+    "too_low_terrain": {
+        "sounds": [
+            {
+                "name": "pullup:too_low_terrain"
+            }
+        ]
+    },
+    "traffic": {
+        "sounds": [
+            {
+                "name": "pullup:traffic"
+            }
+        ]
+    },
+    "wind_shear": {
+        "sounds": [
+            {
+                "name": "pullup:wind_shear"
+            }
+        ]
+    },
+    "wind_shear_ahead": {
+        "sounds": [
+            {
+                "name": "pullup:wind_shear_ahead"
+            }
+        ]
     }
 }

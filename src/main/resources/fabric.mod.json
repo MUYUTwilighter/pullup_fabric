@@ -1,0 +1,30 @@
+{
+    "schemaVersion": 1,
+    "id": "pullup",
+    "version": "${version}",
+    "name": "pullup",
+    "description": "Add customizable \"Pull-up\" warnings to Minecraft.",
+    "authors": [
+        "MUYU_Twilighter"
+    ],
+    "contact": {
+        "website": "muyucloud.cool",
+        "repo": "https://github.com/MUYUTwilighter/saplanting_fabric"
+    },
+    "license": "All-Rights-Reserved",
+    "icon": "assets/pullup/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "cool.muyucloud.pullup.Pullup"
+        ]
+    },
+    "mixins": [
+        "pullup.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.14.9",
+        "fabric": "*",
+        "minecraft": "1.18.2"
+    }
+}

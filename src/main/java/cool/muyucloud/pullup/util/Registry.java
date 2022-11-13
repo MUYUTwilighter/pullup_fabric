@@ -33,6 +33,8 @@ public class Registry<T> {
         ARGUMENTS.register(new Identifier("pullup:yaw"), (player, world) -> player.getYaw());
         ARGUMENTS.register(new Identifier("pullup:pitch"), (player, world) -> player.getPitch());
         ARGUMENTS.register(new Identifier("pullup:distance_ahead"), (player, world) -> ((ServerPlayerEntityAccess) player).getDistanceAhead());
+        ARGUMENTS.register(new Identifier("pullup:distance_pitched_10"), (player, world) -> ((ServerPlayerEntityAccess) player).getDistancePitched10());
+        ARGUMENTS.register(new Identifier("pullup:distance_pitched_m10"), (player, world) -> ((ServerPlayerEntityAccess) player).getDistancePitchedM10());
     }
 
     public static void registerOperators() {
@@ -100,5 +102,9 @@ public class Registry<T> {
 
     public void clear() {
         this.registries.clear();
+    }
+
+    public boolean contains(Identifier id) {
+        return this.registries.containsKey(id);
     }
 }

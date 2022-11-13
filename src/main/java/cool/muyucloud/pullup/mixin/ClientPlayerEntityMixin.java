@@ -21,6 +21,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends PlayerEntity {
     @Shadow @Final public ClientPlayNetworkHandler networkHandler;
+
+    @Shadow public abstract float getYaw(float tickDelta);
+
     private static final Config CONFIG = Pullup.getConfig();
 
     public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
@@ -29,7 +32,9 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 
     @Inject(method = "sendMovementPackets", at = @At("HEAD"))
     public void sendMovementPackets(CallbackInfo ci) {
-        PullupPlayerMovePacketC2S packet = new PullupPlayerMovePacketC2S(this.getDistanceAhead(), this.getRelativeHeight());
+        PullupPlayerMovePacketC2S packet = new PullupPlayerMovePacketC2S(
+            this.getDistanceAhead(), this.getRelativeHeight(), this.getPitchedDistance(10), this.getPitchedDistance(-10)
+        );
         this.networkHandler.sendPacket(packet);
     }
 
@@ -37,6 +42,15 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
         int maxDistance = CONFIG.getAsInt("maxDistance");
         Vec3d target = this.raycast(maxDistance, 0, false).getPos();
         return this.getPos().distanceTo(target);
+    }
+
+    private double getPitchedDistance(float pitch) {
+        int maxDistance = CONFIG.getAsInt("maxDistance");
+        Vec3d cameraPos = this.getCameraPosVec(0);
+        Vec3d rotate = this.getRotationVector(this.getPitch() + pitch, this.getYaw());
+        Vec3d endPos = cameraPos.add(rotate.x * maxDistance, rotate.y * maxDistance, rotate.z * maxDistance);
+        Vec3d target = this.world.raycast(new RaycastContext(cameraPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this)).getPos();
+        return cameraPos.distanceTo(target);
     }
 
     private double getRelativeHeight() {

@@ -4,6 +4,8 @@ import cool.muyucloud.pullup.util.PullupPlayerMovePacketC2S;
 
 public interface ServerPlayerEntityAccess {
     double getDistanceAhead();
+    double getDistancePitched10();
+    double getDistancePitchedM10();
 
     double getRelativeHeight();
 

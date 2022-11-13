@@ -14,9 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ConditionLoader {
     private static final Registry<Condition> CONDITIONS = Registry.CONDITIONS;
@@ -38,12 +36,12 @@ public class ConditionLoader {
 
             String spaceName = getFileNameNoEx(name);
             for (int i = 0; i < array.size(); ++i) {
-                Condition condition = parseCondition(array.get(i));
+                Condition condition = parseCondition(array.get(i), spaceName);
                 if (condition == null) {
                     LOGGER.warn(String.format("Problems occurred during analyzing conditions in file %s.", name));
                     continue;
                 }
-                CONDITIONS.register(new Identifier(String.format("%s:%s", spaceName, condition.getName())), condition);
+                CONDITIONS.register(condition.getId(), condition);
             }
         }
     }
@@ -55,24 +53,26 @@ public class ConditionLoader {
         return output == null ? new String[0] : output;
     }
 
-    private static Condition parseCondition(JsonElement element) {
+    private static Condition parseCondition(JsonElement element, String spaceName) {
         try {
             JsonObject object = element.getAsJsonObject();
 
-            String name = object.getAsJsonPrimitive("name").getAsString();
+            Identifier id = new Identifier(spaceName, object.getAsJsonPrimitive("name").getAsString());
+            int playDelay = object.getAsJsonPrimitive("play_delay").getAsInt();
             String sound = object.getAsJsonPrimitive("sound").getAsString();
             int checkDelay = object.getAsJsonPrimitive("check_delay").getAsInt();
-            JsonArray argsJson = object.getAsJsonArray("arguments");
+            boolean loopPlay = object.getAsJsonPrimitive("loop_play").getAsBoolean();
+            JsonObject argsJson = object.getAsJsonObject("arguments");
             JsonArray expsJson = object.getAsJsonArray("expressions");
 
             if (argsJson.size() == 0 || expsJson.size() == 0) {
-                return new Condition(name, sound, checkDelay, new String[]{"-1"});
+                return new Condition(id, playDelay, loopPlay, sound, checkDelay, new HashMap<>(), "-1");
             }
 
-            String[] argArray = parseJsonArrayAsString(argsJson);
+            Map<String, String> argMap = parseJsonObjectAsMap(argsJson);
             String[] expArray = parseJsonArrayAsString(expsJson);
 
-            return new Condition(name, sound, checkDelay, expArray, argArray);
+            return new Condition(id, playDelay, loopPlay, sound, checkDelay, argMap, expArray);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,12 +120,12 @@ public class ConditionLoader {
 
         String spaceName = "pullup";
         for (int i = 0; i < array.size(); ++i) {
-            Condition condition = parseCondition(array.get(i));
+            Condition condition = parseCondition(array.get(i), spaceName);
             if (condition == null) {
                 LOGGER.warn("Problems occurred during analyzing conditions in default condition file.");
                 continue;
             }
-            CONDITIONS.register(new Identifier(String.format("%s:%s", spaceName, condition.getName())), condition);
+            CONDITIONS.register(condition.getId(), condition);
         }
     }
 
@@ -135,6 +135,17 @@ public class ConditionLoader {
             output[i] = array.get(i).getAsString();
         }
         return output;
+    }
+
+    public static Map<String, String> parseJsonObjectAsMap(JsonObject object) {
+        HashMap<String, String> map = new HashMap<>();
+        Set<Map.Entry<String, JsonElement>> entries = object.entrySet();
+        for (Map.Entry<String, JsonElement> entry : entries) {
+            String var = entry.getKey();
+            String id = entry.getValue().getAsString();
+            map.put(var, id);
+        }
+        return map;
     }
 
     public static void writeDefaultConditions() {

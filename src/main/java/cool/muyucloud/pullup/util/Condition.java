@@ -8,25 +8,32 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 import net.objecthunter.exp4j.operator.Operator;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class Condition {
-    private final String name;
+    private final Identifier id;
     private final int checkDelay;
+    private final int playDelay;
+    private final boolean loopPlay;
     private final Identifier sound;
-    private final HashSet<Identifier> arguments;
+    private final HashMap<String, Identifier> arguments;
     private final HashSet<Expression> expressions;
 
-    public Condition(String name, String sound, int checkDelay, String[] expressions, String... arguments) {
-        this.name = name;
+    public Condition(Identifier id, int playDelay, boolean loopPlay, String sound, int checkDelay, Map<String, String> arguments, String... expressions) {
+        this.id = id;
         this.checkDelay = checkDelay;
         this.sound = new Identifier(sound);
-        this.arguments = new HashSet<>();
-        for (String argument : arguments) {
-            Identifier id = new Identifier(argument);
-            if (Registry.ARGUMENTS.get(new Identifier(argument)) != null) {
-                this.arguments.add(id);
+        this.playDelay = playDelay;
+        this.loopPlay = loopPlay;
+        this.arguments = new HashMap<>();
+        for (String var : arguments.keySet()) {
+            Identifier argId = new Identifier(arguments.get(var));
+            if (Registry.ARGUMENTS.get(argId) == null) {
+                throw new NullPointerException(String.format("No such argument \"%s\"", argId));
             }
+            this.arguments.put(var, argId);
         }
 
         this.expressions = new HashSet<>();
@@ -38,9 +45,8 @@ public class Condition {
     @NotNull
     private Expression parseExpression(String expression) {
         ExpressionBuilder builder = new ExpressionBuilder(expression);
-        for (Identifier id : this.arguments) {
-            String argument = String.format("%s_%s", id.getNamespace(), id.getPath());
-            builder.variable(argument);
+        for (String var : this.arguments.keySet()) {
+            builder.variable(var);
             for (Operator operator : Registry.OPERATOR.getAll()) {
                 builder.operator(operator);
             }
@@ -48,18 +54,11 @@ public class Condition {
         return builder.build();
     }
 
-    public boolean matchCondition(ServerPlayerEntity player, World world, int tick) {
-        if (tick % this.checkDelay != 0) {
-            return false;
-        }
-        return verifyExpressions(player, world);
-    }
-
     public Identifier getSound() {
         return this.sound;
     }
 
-    private boolean verifyExpressions(ServerPlayerEntity player, World world) {
+    public boolean verifyExpressions(ServerPlayerEntity player, World world) {
         for (Expression expression : this.expressions) {
             if (computeExpression(player, world, expression) < 0) return false;
         }
@@ -67,15 +66,26 @@ public class Condition {
     }
 
     private double computeExpression(ServerPlayerEntity player, World world, Expression expression) {
-        for (Identifier id : this.arguments) {
-            double value = Registry.ARGUMENTS.get(id).compute(player, world);
-            String argument = String.format("%s_%s", id.getNamespace(), id.getPath());
-            expression.setVariable(argument, value);
+        for (String var : this.arguments.keySet()) {
+            double value = Registry.ARGUMENTS.get(this.arguments.get(var)).compute(player, world);
+            expression.setVariable(var, value);
         }
         return expression.evaluate();
     }
 
-    public String getName() {
-        return this.name;
+    public Identifier getId() {
+        return this.id;
+    }
+
+    public int getPlayDelay() {
+        return this.playDelay;
+    }
+
+    public int getCheckDelay() {
+        return this.checkDelay;
+    }
+
+    public boolean shouldLoopPlay() {
+        return this.loopPlay;
     }
 }

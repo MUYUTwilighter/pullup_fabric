@@ -29,27 +29,18 @@
 ```Json
 [
     {
-        "name": "example1",
+        "name": "example",
         "sound": "pullup:test",
+        "loop_play": true,
+        "play_delay": 20,
         "check_delay": 40,
-        "arguments": [
-            "pullup:absolute_height",
-            "pullup:yaw"
-        ],
+        "arguments": {
+            "A": "pullup:absolute_height",
+            "B": "pullup:yaw"
+        },
         "expressions": [
-            "pullup_absolute_height - 120",
-            "5 - | pullup_yaw - 5 |"
-        ]
-    },
-    {
-        "name": "example2",
-        "sound": "pullup:test",
-        "check_delay": 40,
-        "arguments": [
-            "pullup:relative_height"
-        ],
-        "expressions": [
-            "pullup_relative_height - 10"
+            "A - 120",
+            "5 - | B - 5 |"
         ]
     }
 ]
@@ -59,13 +50,14 @@
 在条件中，每一个键的意义如下：  
 - name: 条件组的命名，同样需要符合 Identifier 条件
 - sound: 触发该条件时播放的资源包中的音频
+- loop_play: 是否循环播放
+- play_delay: 循环播放警报的间隔
 - check_delay: 检测频率
-- arguments: 检测表达式中所需要用到的参数
+- arguments: 检测表达式中所需要用到参数的对照表，在书写表达式的时候只需要用键当作变量即可  
 - expressions: 检测表达式
 
 ### 参数
-参数是模组预先制定好的，在写表达式的时候可以直接引用。  
-需要注意的是，分隔命名空间所使用的冒号 ":" 在表达式中使用时需要更改为下划线 "_"。  
+参数是模组预先制定好的，在写表达式的时候可以直接引用。
 
 #### 参数列表
 - pullup:absolute_height | 玩家的绝对高度，即坐标 Y 值
@@ -76,6 +68,8 @@
 - pullup:yaw | 玩家的水平（即左右）角度
 - pullup:pitch | 玩家的垂直（即上下）角度
 - pullup:distance_ahead | 玩家所指向方块（包括流体）的距离
+- pullup:distance_pitched_10 | 玩家所指向方向下方 10° 的指向方块（包括流体）的距离
+- pullup:distance_pitched_m10 | 玩家所指向方向上方 10° 的指向方块（包括流体）的距离
 
 ### 条件表达式
 在一个条件内，可以设置多个检测表达式。检测表达式是一个数学表达式，条件表达式符号的规则有所改动；当一个条件内所有的表达式的计算结果都大于 0 时，该条件才会被认定通过，并播放警报。  

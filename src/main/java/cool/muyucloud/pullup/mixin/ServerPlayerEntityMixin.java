@@ -35,6 +35,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Se
     private double distancePitchedM10 = 500;
     private double relativeHeight = 500;
     private final HashMap<Identifier, ConditionTrigger> triggers = new HashMap<>();
+    private boolean isCleared = false;
 
     public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
@@ -44,6 +45,16 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Se
     public void tick(CallbackInfo ci) {
         if (this.world.isClient() || !CONFIG.getAsBool("enable") || !this.isFallFlying()) {
             return;
+        }
+
+        if (ConditionTrigger.shouldClear) {
+            if (this.isCleared) {
+                ConditionTrigger.shouldClear = false;
+                this.isCleared = false;
+            } else {
+                this.triggers.clear();
+                this.isCleared = true;
+            }
         }
 
         for (Condition condition : CONDITIONS) {
@@ -61,7 +72,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Se
         for (Identifier id : this.triggers.keySet()) {
             Condition condition = Registry.CONDITIONS.get(id);
             if (condition == null) {
-                this.triggers.remove(id);
                 continue;
             }
 

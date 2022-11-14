@@ -84,8 +84,8 @@ public class Registry<T> {
 
     private final HashMap<Identifier, T> registries = new HashMap<>();
 
-    public void register(Identifier name, T content) {
-        this.registries.put(name, content);
+    public void register(Identifier id, T content) {
+        this.registries.put(id, content);
     }
 
     public T get(Identifier name) {
@@ -102,9 +102,5 @@ public class Registry<T> {
 
     public void clear() {
         this.registries.clear();
-    }
-
-    public boolean contains(Identifier id) {
-        return this.registries.containsKey(id);
     }
 }

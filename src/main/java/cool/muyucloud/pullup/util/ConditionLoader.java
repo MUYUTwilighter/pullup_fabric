@@ -28,6 +28,7 @@ public class ConditionLoader {
 
         if (files.contains(name)) {
             CONDITIONS.clear();
+            ConditionTrigger.shouldClear = true;
             CONFIG.set("loadSet", name);
             JsonArray array = readArray(name);
             if (array == null || array.size() == 0) {
@@ -103,6 +104,7 @@ public class ConditionLoader {
     public static void loadDefault() {
         prepareDir();
         CONDITIONS.clear();
+        ConditionTrigger.shouldClear = true;
         CONFIG.set("loadSet", "default");
         String json;
         JsonArray array;

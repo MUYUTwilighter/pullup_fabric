@@ -1,0 +1,14 @@
+{
+    "command.pullup.client.enable": "Enabled Pullup",
+    "command.pullup.client.disable": "Disabled Pullup",
+    "command.pullup.client.load.specific.notExist": "Condition set %s does not exists",
+    "command.pullup.client.load.specific.loading": "Loading condition set %s",
+    "command.pullup.client.load.default": "Loading default condition set",
+    "command.pullup.client.grab.enableLoadServer": "Please enable loading server conditions.",
+    "command.pullup.client.grab.sent" : "Sent request to server",
+    "command.pullup.client.loadServer.enable": "Enabled server condition set",
+    "command.pullup.client.loadServer.disabled": "Disabled server condition set",
+    "command.pullup.server.enableSend": "Enabled sending server condition set",
+    "command.pullup.server.disableSend": "Disabled sending server condition set",
+    "network.client.pullup.refuse.receive": "Server denied your request."
+}

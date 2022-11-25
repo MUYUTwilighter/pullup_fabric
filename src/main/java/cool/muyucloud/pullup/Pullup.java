@@ -1,17 +1,18 @@
 package cool.muyucloud.pullup;
 
-import cool.muyucloud.pullup.util.Command;
-import cool.muyucloud.pullup.util.ConditionLoader;
-import cool.muyucloud.pullup.util.Config;
-import cool.muyucloud.pullup.util.Registry;
+import cool.muyucloud.pullup.util.*;
+import cool.muyucloud.pullup.util.command.ClientCommand;
+import cool.muyucloud.pullup.util.command.ServerCommand;
+import cool.muyucloud.pullup.util.condition.ConditionLoader;
+import cool.muyucloud.pullup.util.network.PullupNetworkC2S;
+import cool.muyucloud.pullup.util.network.PullupNetworkS2C;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Objects;
 
 public class Pullup implements ModInitializer {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -32,15 +33,12 @@ public class Pullup implements ModInitializer {
         ServerLifecycleEvents.SERVER_STOPPING.register(this::onServerStopping);
 
         LOGGER.info("Registering commands.");
-        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> Command.register(dispatcher));
+        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> ServerCommand.register(dispatcher));
+        ClientCommand.register(ClientCommandManager.DISPATCHER);
 
-        LOGGER.info("Initializing condition set.");
-        String loadSet = CONFIG.getAsString("loadSet");
-        if (Objects.equals(loadSet, "default")) {
-            ConditionLoader.loadDefault();
-        }
-        ConditionLoader.load(loadSet);
-        LOGGER.info(String.format("Loaded condition set %s.", loadSet));
+        LOGGER.info("Registering network.");
+        PullupNetworkS2C.registerReceive();
+        PullupNetworkC2S.registerReceive();
 
         LOGGER.info("Generating example condition set.");
         ConditionLoader.writeDefaultConditions();

@@ -1,0 +1,14 @@
+{
+    "command.pullup.client.enable": "已启用飞行警报",
+    "command.pullup.client.disable": "已禁用飞行警报",
+    "command.pullup.client.load.specific.notExist": "条件组 %s 不存在",
+    "command.pullup.client.load.specific.loading": "正在加载条件组 %s",
+    "command.pullup.client.load.default": "正在加载默认条件组",
+    "command.pullup.client.grab.enableLoadServer": "请先启用加载服务端条件组",
+    "command.pullup.client.grab.sent" : "已向服务端发送请求",
+    "command.pullup.client.loadServer.enable": "已启用加载服务端条件组",
+    "command.pullup.client.loadServer.disabled": "已禁用加载服务端条件组",
+    "command.pullup.server.enableSend": "已启用发送服务端条件组",
+    "command.pullup.server.disableSend": "已禁用发送服务端条件组",
+    "network.client.pullup.refuse.receive": "服务器拒绝了请求"
+}

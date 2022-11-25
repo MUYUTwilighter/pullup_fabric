@@ -22,8 +22,11 @@ public class Config {
 
     public Config() {
         this.properties.addProperty("enable", true);
+        this.properties.addProperty("loadServer", true);
+        this.properties.addProperty("sendServer", true);
         this.properties.addProperty("maxDistance", 500);
-        this.properties.addProperty("loadSet", "default.json");
+        this.properties.addProperty("sendDelay", 50);
+        this.properties.addProperty("loadSet", "default");
     }
 
     public String getAsString(String key) {

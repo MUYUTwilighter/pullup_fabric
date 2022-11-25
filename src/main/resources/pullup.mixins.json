@@ -4,11 +4,11 @@
     "package": "cool.muyucloud.pullup.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "ServerPlayerEntityMixin",
-        "ServerPlayNetworkHandlerMixin"
+        "ServerWorldMixin"
     ],
     "client": [
-        "ClientPlayerEntityMixin"
+        "ClientPlayerEntityMixin",
+        "ClientPlayNetworkHandlerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

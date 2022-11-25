@@ -6,10 +6,10 @@
         "loop_play": false,
         "check_delay": 5,
         "arguments": {
-            "A": "pullup:relative_height"
+            "a": "pullup:relative_height"
         },
         "expressions": [
-            "0.5 - abs(A - 3)"
+            "0.5 - abs(a - 3)"
         ]
     },
     {
@@ -19,10 +19,10 @@
         "loop_play": false,
         "check_delay": 5,
         "arguments": {
-            "A": "pullup:relative_height"
+            "a": "pullup:relative_height"
         },
         "expressions": [
-            "1 - abs(A - 5)"
+            "1 - abs(a - 5)"
         ]
     },
     {
@@ -32,10 +32,10 @@
         "loop_play": false,
         "check_delay": 5,
         "arguments": {
-            "A": "pullup:relative_height"
+            "a": "pullup:relative_height"
         },
         "expressions": [
-            "1 - abs(A - 10)"
+            "1 - abs(a - 10)"
         ]
     },
     {
@@ -45,10 +45,10 @@
         "loop_play": false,
         "check_delay": 5,
         "arguments": {
-            "A": "pullup:relative_height"
+            "a": "pullup:relative_height"
         },
         "expressions": [
-            "1 - abs(A - 20)"
+            "1 - abs(a - 20)"
         ]
     },
     {
@@ -58,10 +58,10 @@
         "loop_play": false,
         "check_delay": 5,
         "arguments": {
-            "A": "pullup:relative_height"
+            "a": "pullup:relative_height"
         },
         "expressions": [
-            "1 - abs(A - 30)"
+            "1 - abs(a - 30)"
         ]
     },
     {
@@ -71,10 +71,10 @@
         "loop_play": false,
         "check_delay": 5,
         "arguments": {
-            "A": "pullup:relative_height"
+            "a": "pullup:relative_height"
         },
         "expressions": [
-            "1 - abs(A - 40)"
+            "1 - abs(a - 40)"
         ]
     },
     {
@@ -84,10 +84,10 @@
         "loop_play": false,
         "check_delay": 5,
         "arguments": {
-            "A": "pullup:relative_height"
+            "a": "pullup:relative_height"
         },
         "expressions": [
-            "1 - abs(A - 50)"
+            "1 - abs(a - 50)"
         ]
     },
     {
@@ -97,11 +97,11 @@
         "loop_play": true,
         "check_delay": 5,
         "arguments": {
-            "A": "pullup:distance_ahead",
-            "B": "pullup:pitch"
+            "a": "pullup:distance_ahead",
+            "b": "pullup:pitch"
         },
         "expressions": [
-            "(abs(A) < 20) & (abs(A) > 5) & (abs(B) < 20)"
+            "(abs(a) < 20) & (abs(a) > 5) & (abs(b) < 20)"
         ]
     },
     {
@@ -111,12 +111,12 @@
         "loop_play": true,
         "check_delay": 5,
         "arguments": {
-            "A": "pullup:vertical_speed",
-            "B": "pullup:relative_height",
-            "C": "pullup:pitch"
+            "a": "pullup:vertical_speed",
+            "b": "pullup:relative_height",
+            "c": "pullup:pitch"
         },
         "expressions": [
-            "(B > 5) & (A * 20 > B) | (A > 0.5) | (C > 45)"
+            "(b > 5) & (a * 20 > b) | (a > 0.25) | (c > 45)"
         ]
     }
 ]

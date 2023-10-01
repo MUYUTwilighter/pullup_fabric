@@ -8,11 +8,9 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.MessageType;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -56,8 +54,8 @@ public class PullupNetworkS2C {
     }
 
     private static void receiveRefuse(MinecraftClient client) {
-        client.execute(() -> client.inGameHud.addChatMessage(
-            MessageType.SYSTEM, new TranslatableText("network.client.pullup.refuse.receive").formatted(Formatting.RED), Util.NIL_UUID));
+        client.execute(() -> client.inGameHud.getChatHud().addMessage(
+            Text.translatable("network.client.pullup.refuse.receive").formatted(Formatting.RED)));
     }
 
     /**

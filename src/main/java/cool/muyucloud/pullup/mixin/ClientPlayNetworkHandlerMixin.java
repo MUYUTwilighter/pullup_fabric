@@ -8,6 +8,7 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -17,7 +18,9 @@ import java.util.Objects;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin {
+    @Unique
     private static final Logger LOGGER = Pullup.getLogger();
+    @Unique
     private static final Config CONFIG = Pullup.getConfig();
 
     @Inject(method = "onGameJoin", at = @At("HEAD"))
@@ -32,6 +35,7 @@ public class ClientPlayNetworkHandlerMixin {
         }
     }
 
+    @Unique
     private void loadConditions() throws IOException {
         Registry.CONDITIONS.clear();
         String loadSet = CONFIG.getAsString("loadSet");

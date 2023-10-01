@@ -7,8 +7,9 @@ import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import cool.muyucloud.pullup.util.network.PullupNetworkC2S;
 import cool.muyucloud.pullup.util.network.PullupNetworkS2C;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.LogManager;
@@ -33,8 +34,8 @@ public class Pullup implements ModInitializer {
         ServerLifecycleEvents.SERVER_STOPPING.register(this::onServerStopping);
 
         LOGGER.info("Registering commands.");
-        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> ServerCommand.register(dispatcher));
-        ClientCommand.register(ClientCommandManager.DISPATCHER);
+        CommandRegistrationCallback.EVENT.register((dispatcher, access, dedicated) -> ServerCommand.register(dispatcher));
+        ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> ClientCommand.register(dispatcher)));
 
         LOGGER.info("Registering network.");
         PullupNetworkS2C.registerReceive();

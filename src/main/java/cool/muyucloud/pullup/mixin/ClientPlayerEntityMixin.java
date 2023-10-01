@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -31,6 +32,7 @@ import java.util.HashSet;
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends PlayerEntity implements ClientPlayerEntityAccess {
     @Shadow
+    @Override
     public abstract float getYaw(float tickDelta);
 
     @Shadow
@@ -39,16 +41,23 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
     private float lastPitch;
 
     @Shadow
+    @Override
     public abstract void tick();
 
     @Shadow
     @Final
     protected MinecraftClient client;
+    @Unique
     private static final Config CONFIG = Pullup.getConfig();
+    @Unique
     private int ticks = 0;
+    @Unique
     private boolean isNewTick = false;
+    @Unique
     private long flightStart = new Date().getTime();
+    @Unique
     private final HashMap<Identifier, ConditionTrigger> conditionTriggers = new HashMap<>();
+    @Unique
     private final HashSet<Identifier> triggersToRemove = new HashSet<>();
 
     public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
@@ -67,6 +76,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
         this.clearTriggers();
     }
 
+    @Unique
     private void checkConditions() {
         for (Condition condition : Registry.CONDITIONS.getAll()) {
             if (this.ticks % condition.getCheckDelay() != 0) {
@@ -76,7 +86,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
             this.registerTrigger(condition.getId());
             ConditionTrigger trigger = this.conditionTriggers.get(condition.getId());
 
-            if (!condition.verifyExpressions(((ClientPlayerEntity) (Object) this), world)) {
+            if (!condition.verifyExpressions(((ClientPlayerEntity) (Object) this), this.getWorld())) {
                 trigger.isTriggered = false;
                 trigger.lastPlay = -1;
                 continue;
@@ -86,6 +96,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
         }
     }
 
+    @Unique
     private void registerTrigger(Identifier id) {
         if (this.conditionTriggers.containsKey(id)) {
             return;
@@ -96,6 +107,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
         this.conditionTriggers.put(id, trigger);
     }
 
+    @Unique
     private void playSounds() {
         if (this.client.world == null) {
             return;
@@ -115,8 +127,8 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
 
             if (!condition.shouldLoopPlay()) {
                 if (trigger.lastPlay == -1) {
-                    this.client.world.playSound(this.getBlockPos(),
-                        new SoundEvent(condition.getSound()),
+                    this.client.world.playSound(this.getX(), this.getY(), this.getZ(),
+                        SoundEvent.of(condition.getSound(), 0),
                         SoundCategory.MUSIC, 1.0F, 1.0F, false);
                     trigger.lastPlay = this.ticks;
                 }
@@ -125,13 +137,14 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
 
             if (condition.getPlayDelay() < (this.ticks - trigger.lastPlay)) {
                 trigger.lastPlay = this.ticks;
-                this.client.world.playSound(this.getBlockPos(),
-                    new SoundEvent(condition.getSound()),
+                this.client.world.playSound(this.getX(), this.getY(), this.getZ(),
+                    SoundEvent.of(condition.getSound(), 0),
                     SoundCategory.MUSIC, 1.0F, 1.0F, false);
             }
         }
     }
 
+    @Unique
     private void clearTriggers() {
         for (Identifier id : this.triggersToRemove) {
             this.conditionTriggers.remove(id);
@@ -139,6 +152,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
         this.triggersToRemove.clear();
     }
 
+    @Unique
     private void updateTick() {
         if (!this.isFallFlying()) {
             this.isNewTick = false;
@@ -153,45 +167,51 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
         this.ticks = tmpTick;
     }
 
+    @Unique
     @Override
     public double getDistanceHorizontal() {
         int maxDistance = CONFIG.getAsInt("maxDistance");
         Vec3d cameraPos = this.getCameraPosVec(0);
         Vec3d rotate = this.getRotationVector(0, this.getYaw());
         Vec3d endPos = cameraPos.add(rotate.x * maxDistance, rotate.y * maxDistance, rotate.z * maxDistance);
-        Vec3d target = this.world.raycast(new RaycastContext(cameraPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this)).getPos();
+        Vec3d target = this.getWorld().raycast(new RaycastContext(cameraPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this)).getPos();
         return cameraPos.distanceTo(target);
     }
 
+    @Unique
     @Override
     public double getPitchedDistanceAhead(float pitch) {
         int maxDistance = CONFIG.getAsInt("maxDistance");
         Vec3d cameraPos = this.getCameraPosVec(0);
         Vec3d rotate = this.getRotationVector(this.getPitch() + pitch, this.getYaw());
         Vec3d endPos = cameraPos.add(rotate.x * maxDistance, rotate.y * maxDistance, rotate.z * maxDistance);
-        Vec3d target = this.world.raycast(new RaycastContext(cameraPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this)).getPos();
+        Vec3d target = this.getWorld().raycast(new RaycastContext(cameraPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this)).getPos();
         return cameraPos.distanceTo(target);
     }
 
+    @Unique
     @Override
     public double getRelativeHeight() {
         int maxDistance = CONFIG.getAsInt("maxDistance");
         Vec3d cameraPos = this.getCameraPosVec(0);
         Vec3d endPos = cameraPos.add(0, -maxDistance, 0);
-        Vec3d target = this.world.raycast(new RaycastContext(cameraPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this)).getPos();
+        Vec3d target = this.getWorld().raycast(new RaycastContext(cameraPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this)).getPos();
         return cameraPos.distanceTo(target);
     }
 
+    @Unique
     @Override
     public double getDeltaYaw() {
         return this.getYaw() - this.lastYaw;
     }
 
+    @Unique
     @Override
     public double getDeltaPitch() {
         return this.getPitch() - this.lastPitch;
     }
 
+    @Unique
     @Override
     public double getFlightTicks() {
         return this.ticks;

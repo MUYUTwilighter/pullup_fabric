@@ -7,14 +7,14 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import cool.muyucloud.pullup.Pullup;
-import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import cool.muyucloud.pullup.util.Config;
+import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import cool.muyucloud.pullup.util.network.PullupNetworkS2C;
 import net.minecraft.command.CommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 public class ServerCommand {
     private static final SuggestionProvider<ServerCommandSource> CONDITION_SETS = (context, builder) -> CommandSource.suggestMatching(ConditionLoader.getFileList(), builder);
@@ -33,16 +33,16 @@ public class ServerCommand {
 
     private static int enableSend(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
-        MutableText text = new TranslatableText("command.pullup.server.enableSend");
-        source.sendFeedback(text, true);
+        MutableText text = Text.translatable("command.pullup.server.enableSend");
+        source.sendFeedback(() -> text, true);
         CONFIG.set("sendServer", true);
         return 1;
     }
 
     private static int disableSend(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
-        MutableText text = new TranslatableText("command.pullup.server.disableSend");
-        source.sendFeedback(text, true);
+        MutableText text = Text.translatable("command.pullup.server.disableSend");
+        source.sendFeedback(() -> text, true);
         CONFIG.set("sendServer", false);
         return 1;
     }
@@ -61,14 +61,14 @@ public class ServerCommand {
         return conditionSet;
     }
 
-    private static int loadSet(String name, ServerCommandSource source) throws CommandSyntaxException {
+    private static int loadSet(String name, ServerCommandSource source) {
         if (!ConditionLoader.containsFile(name)) {
-            source.sendFeedback(new TranslatableText("command.pullup.client.load.specific.notExist"), false);
+            source.sendFeedback(() -> Text.translatable("command.pullup.client.load.specific.notExist"), false);
             return 0;
         }
 
-        MutableText text = new TranslatableText("command.pullup.client.load.specific.loading");
-        source.sendFeedback(text, true);
+        MutableText text = Text.translatable("command.pullup.client.load.specific.loading");
+        source.sendFeedback(() -> text, true);
         CONFIG.set("loadSet", name);
         if (CONFIG.getAsBool("sendServer")) {
             PullupNetworkS2C.sendClear(source.getPlayer());
@@ -77,9 +77,9 @@ public class ServerCommand {
         return 1;
     }
 
-    private static int loadDefault(ServerCommandSource source) throws CommandSyntaxException {
-        MutableText text = new TranslatableText("command.pullup.client.load.default");
-        source.sendFeedback(text, true);
+    private static int loadDefault(ServerCommandSource source) {
+        MutableText text = Text.translatable("command.pullup.client.load.default");
+        source.sendFeedback(() -> text, true);
         CONFIG.set("loadSet", "default");
         if (CONFIG.getAsBool("sendServer")) {
             PullupNetworkS2C.sendClear(source.getPlayer());

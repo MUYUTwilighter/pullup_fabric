@@ -6,15 +6,15 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import cool.muyucloud.pullup.Pullup;
-import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import cool.muyucloud.pullup.util.Config;
 import cool.muyucloud.pullup.util.Registry;
+import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import cool.muyucloud.pullup.util.network.PullupNetworkC2S;
-import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
-import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import org.apache.logging.log4j.Logger;
 
 public class ClientCommand {
@@ -38,7 +38,7 @@ public class ClientCommand {
 
     private static int executeEnable(CommandContext<FabricClientCommandSource> context) {
         FabricClientCommandSource source = context.getSource();
-        MutableText text = new TranslatableText("command.pullup.client.enable");
+        MutableText text = Text.translatable("command.pullup.client.enable");
         source.sendFeedback(text);
         CONFIG.set("enable", true);
         return 1;
@@ -46,7 +46,7 @@ public class ClientCommand {
 
     private static int executeDisable(CommandContext<FabricClientCommandSource> context) {
         FabricClientCommandSource source = context.getSource();
-        MutableText text = new TranslatableText("command.pullup.client.disable");
+        MutableText text = Text.translatable("command.pullup.client.disable");
         source.sendFeedback(text);
         CONFIG.set("enable", true);
         return 1;
@@ -68,11 +68,11 @@ public class ClientCommand {
 
     private static int loadSet(String name, FabricClientCommandSource source) {
         if (!ConditionLoader.containsFile(name)) {
-            source.sendError(new TranslatableText("command.pullup.client.load.specific.notExist", name));
+            source.sendError(Text.translatable("command.pullup.client.load.specific.notExist", name));
             return 0;
         }
 
-        MutableText text = new TranslatableText("command.pullup.client.load.specific.loading");
+        MutableText text = Text.translatable("command.pullup.client.load.specific.loading");
         source.sendFeedback(text);
         CONFIG.set("loadSet", name);
         Registry.CONDITIONS.clear();
@@ -87,7 +87,7 @@ public class ClientCommand {
     }
 
     private static int loadDefault(FabricClientCommandSource source) {
-        MutableText text = new TranslatableText("command.pullup.client.load.default");
+        MutableText text = Text.translatable("command.pullup.client.load.default");
         source.sendFeedback(text);
         CONFIG.set("loadSet", "default");
         Registry.CONDITIONS.clear();
@@ -99,18 +99,18 @@ public class ClientCommand {
         FabricClientCommandSource source = context.getSource();
 
         if (!CONFIG.getAsBool("loadServer")) {
-            source.sendError(new TranslatableText("command.pullup.client.grab.enableLoadServer"));
+            source.sendError(Text.translatable("command.pullup.client.grab.enableLoadServer"));
             return 0;
         }
 
         PullupNetworkC2S.sendGrab();
-        source.sendFeedback(new TranslatableText("command.pullup.client.grab.sent"));
+        source.sendFeedback(Text.translatable("command.pullup.client.grab.sent"));
         return 1;
     }
 
     private static int enableServer(CommandContext<FabricClientCommandSource> context) {
         FabricClientCommandSource source = context.getSource();
-        MutableText text = new TranslatableText("command.pullup.client.loadServer.enable");
+        MutableText text = Text.translatable("command.pullup.client.loadServer.enable");
         source.sendFeedback(text);
         CONFIG.set("loadServer", true);
         return 1;
@@ -118,7 +118,7 @@ public class ClientCommand {
 
     private static int disableServer(CommandContext<FabricClientCommandSource> context) {
         FabricClientCommandSource source = context.getSource();
-        MutableText text = new TranslatableText("command.pullup.client.loadServer.disable");
+        MutableText text = Text.translatable("command.pullup.client.loadServer.disable");
         source.sendFeedback(text);
         CONFIG.set("loadServer", false);
         return 1;

@@ -4,12 +4,14 @@ import cool.muyucloud.pullup.access.ClientPlayerEntityAccess;
 import cool.muyucloud.pullup.util.condition.Condition;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+import net.objecthunter.exp4j.function.Function;
 import net.objecthunter.exp4j.operator.Operator;
 
 import java.util.Collection;
 import java.util.HashMap;
 
 public class Registry<T> {
+    public static final Registry<Function> FUNCTIONS = new Registry<>();
     public static final Registry<Argument> ARGUMENTS = new Registry<>();
     public static final Registry<Condition> CONDITIONS = new Registry<>();
     public static final Registry<Operator> OPERATORS = new Registry<>();
@@ -93,6 +95,15 @@ public class Registry<T> {
             @Override
             public double apply(double... args) {
                 return args[0] >= 0 || args[1] >= 0 ? 1 : -1;
+            }
+        });
+    }
+
+    public static void registerFunctions() {
+        FUNCTIONS.register(new Identifier("pullup:pitched_distance"), new Function("pDistance") {
+            @Override
+            public double apply(double... args) {
+                return 0;
             }
         });
     }

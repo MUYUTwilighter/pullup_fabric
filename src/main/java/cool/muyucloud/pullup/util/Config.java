@@ -27,6 +27,8 @@ public class Config {
         this.properties.addProperty("maxDistance", 500);
         this.properties.addProperty("sendDelay", 50);
         this.properties.addProperty("loadSet", "default");
+        this.properties.addProperty("hudTextDisplayX", 0.65f);
+        this.properties.addProperty("hudTextDisplayY", 0.6f);
     }
 
     public String getAsString(String key) {
@@ -51,6 +53,14 @@ public class Config {
         }
 
         return this.properties.getAsJsonPrimitive(key).getAsInt();
+    }
+
+    public float getAsFloat(String key) {
+        if (!this.properties.has(key)) {
+            throw new NullPointerException("Tried to access property %s but it does not exists!".formatted(key));
+        }
+
+        return this.properties.getAsJsonPrimitive(key).getAsFloat();
     }
 
     public void set(String key, String value) {
@@ -109,8 +119,7 @@ public class Config {
         try {
             Files.createFile(PATH);
         } catch (Exception e) {
-            LOGGER.error("Failed to generate config file at %s.".formatted(PATH));
-            e.printStackTrace();
+            LOGGER.error("Failed to generate config file at %s.".formatted(PATH), e);
         }
     }
 

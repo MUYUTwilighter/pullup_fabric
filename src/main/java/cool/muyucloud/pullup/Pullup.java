@@ -1,13 +1,14 @@
 package cool.muyucloud.pullup;
 
-import cool.muyucloud.pullup.util.*;
+import cool.muyucloud.pullup.compat.CompatHandler;
+import cool.muyucloud.pullup.util.Config;
+import cool.muyucloud.pullup.util.Registry;
 import cool.muyucloud.pullup.util.command.ClientCommand;
 import cool.muyucloud.pullup.util.command.ServerCommand;
 import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import cool.muyucloud.pullup.util.network.PullupNetworkC2S;
 import cool.muyucloud.pullup.util.network.PullupNetworkS2C;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -43,6 +44,7 @@ public class Pullup implements ModInitializer {
 
         LOGGER.info("Generating example condition set.");
         ConditionLoader.writeDefaultConditions();
+        CompatHandler.init();
     }
 
     public static Logger getLogger() {

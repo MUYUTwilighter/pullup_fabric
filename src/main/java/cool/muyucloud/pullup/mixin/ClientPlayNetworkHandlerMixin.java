@@ -1,9 +1,9 @@
 package cool.muyucloud.pullup.mixin;
 
 import cool.muyucloud.pullup.Pullup;
-import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import cool.muyucloud.pullup.util.Config;
 import cool.muyucloud.pullup.util.Registry;
+import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import org.apache.logging.log4j.Logger;
@@ -29,8 +29,7 @@ public class ClientPlayNetworkHandlerMixin {
             try {
                 this.loadConditions();
             } catch (Exception e) {
-                LOGGER.error("Try to load local condition set but failed.");
-                e.printStackTrace();
+                LOGGER.error("Try to load local condition set but failed.", e);
             }
         }
     }

@@ -4,6 +4,9 @@
         "sound": "pullup:minimum",
         "play_delay": 20,
         "loop_play": false,
+        "hud_text": {
+            "key": "text.flighthud.pullup.minimum"
+        },
         "check_delay": 5,
         "arguments": {
             "a": "pullup:relative_height"
@@ -17,6 +20,9 @@
         "sound": "pullup:5",
         "play_delay": 20,
         "loop_play": false,
+        "hud_text": {
+            "key": "text.flighthud.pullup.5"
+        },
         "check_delay": 5,
         "arguments": {
             "a": "pullup:relative_height"
@@ -30,6 +36,9 @@
         "sound": "pullup:10",
         "play_delay": 20,
         "loop_play": false,
+        "hud_text": {
+            "key": "text.flighthud.pullup.10"
+        },
         "check_delay": 5,
         "arguments": {
             "a": "pullup:relative_height"
@@ -43,6 +52,9 @@
         "sound": "pullup:20",
         "play_delay": 20,
         "loop_play": false,
+        "hud_text": {
+            "key": "text.flighthud.pullup.20"
+        },
         "check_delay": 5,
         "arguments": {
             "a": "pullup:relative_height"
@@ -56,6 +68,9 @@
         "sound": "pullup:30",
         "play_delay": 20,
         "loop_play": false,
+        "hud_text": {
+            "key": "text.flighthud.pullup.30"
+        },
         "check_delay": 5,
         "arguments": {
             "a": "pullup:relative_height"
@@ -69,6 +84,9 @@
         "sound": "pullup:40",
         "play_delay": 20,
         "loop_play": false,
+        "hud_text": {
+            "key": "text.flighthud.pullup.40"
+        },
         "check_delay": 5,
         "arguments": {
             "a": "pullup:relative_height"
@@ -82,6 +100,9 @@
         "sound": "pullup:50",
         "play_delay": 20,
         "loop_play": false,
+        "hud_text": {
+            "key": "text.flighthud.pullup.50"
+        },
         "check_delay": 5,
         "arguments": {
             "a": "pullup:relative_height"
@@ -95,6 +116,9 @@
         "sound": "pullup:terrain_ahead",
         "play_delay": 20,
         "loop_play": true,
+        "hud_text": {
+            "key": "text.flighthud.pullup.terrain_ahead"
+        },
         "check_delay": 5,
         "arguments": {
             "a": "pullup:distance_ahead",
@@ -109,6 +133,9 @@
         "sound": "pullup:sink_rate",
         "play_delay": 20,
         "loop_play": true,
+        "hud_text": {
+            "key": "text.flighthud.pullup.sink_rate"
+        },
         "check_delay": 5,
         "arguments": {
             "a": "pullup:vertical_speed",

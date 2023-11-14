@@ -10,5 +10,14 @@
     "command.pullup.client.loadServer.disabled": "已禁用加载服务端条件组",
     "command.pullup.server.enableSend": "已启用发送服务端条件组",
     "command.pullup.server.disableSend": "已禁用发送服务端条件组",
-    "network.client.pullup.refuse.receive": "服务器拒绝了请求"
+  "network.client.pullup.refuse.receive": "服务器拒绝了请求",
+  "text.flighthud.pullup.minimum": "MINIMUM",
+  "text.flighthud.pullup.5": "5",
+  "text.flighthud.pullup.10": "10",
+  "text.flighthud.pullup.20": "20",
+  "text.flighthud.pullup.30": "30",
+  "text.flighthud.pullup.40": "40",
+  "text.flighthud.pullup.50": "50",
+  "text.flighthud.pullup.terrain_ahead": "TERRAIN AHEAD",
+  "text.flighthud.pullup.sink_rate": "SINK RATE"
 }

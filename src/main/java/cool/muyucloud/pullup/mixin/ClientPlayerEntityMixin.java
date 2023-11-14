@@ -3,10 +3,10 @@ package cool.muyucloud.pullup.mixin;
 import com.mojang.authlib.GameProfile;
 import cool.muyucloud.pullup.Pullup;
 import cool.muyucloud.pullup.access.ClientPlayerEntityAccess;
-import cool.muyucloud.pullup.util.condition.Condition;
-import cool.muyucloud.pullup.util.condition.ConditionTrigger;
 import cool.muyucloud.pullup.util.Config;
 import cool.muyucloud.pullup.util.Registry;
+import cool.muyucloud.pullup.util.condition.Condition;
+import cool.muyucloud.pullup.util.condition.ConditionTrigger;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,9 +25,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends PlayerEntity implements ClientPlayerEntityAccess {
@@ -59,6 +57,8 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
     private final HashMap<Identifier, ConditionTrigger> conditionTriggers = new HashMap<>();
     @Unique
     private final HashSet<Identifier> triggersToRemove = new HashSet<>();
+    @Unique
+    private final TreeMap<Identifier, Condition.ColoredText> hudTexts = new TreeMap<>();
 
     public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
@@ -72,7 +72,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
         }
 
         this.checkConditions();
-        this.playSounds();
+        this.playSoundsAndDisplayTexts();
         this.clearTriggers();
     }
 
@@ -108,7 +108,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
     }
 
     @Unique
-    private void playSounds() {
+    private void playSoundsAndDisplayTexts() {
         if (this.client.world == null) {
             return;
         }
@@ -121,8 +121,12 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
             }
 
             ConditionTrigger trigger = this.conditionTriggers.get(id);
+            final Condition.ColoredText hudText = condition.getHudText();
             if (!trigger.isTriggered) {
+                if (!hudText.isEmpty()) hudTexts.remove(id);
                 continue;
+            } else {
+                if (!hudText.isEmpty()) hudTexts.put(id, hudText);
             }
 
             if (!condition.shouldLoopPlay()) {
@@ -215,5 +219,11 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
     @Override
     public double getFlightTicks() {
         return this.ticks;
+    }
+
+    @Unique
+    @Override
+    public List<Condition.ColoredText> getHudTexts() {
+        return hudTexts.values().stream().toList();
     }
 }

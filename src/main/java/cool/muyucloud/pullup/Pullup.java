@@ -1,6 +1,5 @@
 package cool.muyucloud.pullup;
 
-import cool.muyucloud.pullup.compat.CompatHandler;
 import cool.muyucloud.pullup.util.Config;
 import cool.muyucloud.pullup.util.Registry;
 import cool.muyucloud.pullup.util.command.ClientCommand;
@@ -44,7 +43,6 @@ public class Pullup implements ModInitializer {
 
         LOGGER.info("Generating example condition set.");
         ConditionLoader.writeDefaultConditions();
-        CompatHandler.init();
     }
 
     public static Logger getLogger() {

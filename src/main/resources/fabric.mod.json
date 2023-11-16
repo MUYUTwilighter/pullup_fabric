@@ -17,6 +17,9 @@
     "entrypoints": {
         "main": [
             "cool.muyucloud.pullup.Pullup"
+        ],
+        "client": [
+            "cool.muyucloud.pullup.client.PullupClient"
         ]
     },
     "mixins": [

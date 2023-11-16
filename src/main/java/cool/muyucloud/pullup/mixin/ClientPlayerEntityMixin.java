@@ -133,7 +133,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
                 if (trigger.lastPlay == -1) {
                     this.client.world.playSound(this.getX(), this.getY(), this.getZ(),
                         SoundEvent.of(condition.getSound(), 0),
-                        SoundCategory.MUSIC, 1.0F, 1.0F, false);
+                            SoundCategory.VOICE, 1.0F, 1.0F, false);
                     trigger.lastPlay = this.ticks;
                 }
                 continue;
@@ -143,7 +143,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
                 trigger.lastPlay = this.ticks;
                 this.client.world.playSound(this.getX(), this.getY(), this.getZ(),
                     SoundEvent.of(condition.getSound(), 0),
-                    SoundCategory.MUSIC, 1.0F, 1.0F, false);
+                        SoundCategory.VOICE, 1.0F, 1.0F, false);
             }
         }
     }

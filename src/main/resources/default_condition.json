@@ -122,10 +122,12 @@
         "check_delay": 5,
         "arguments": {
             "a": "pullup:distance_ahead",
-            "b": "pullup:pitch"
+            "b": "pullup:pitch",
+            "c": "pullup:relative_height",
+            "d": "pullup:speed"
         },
         "expressions": [
-            "(abs(a) < 20) & (abs(a) > 5) & (abs(b) < 20)"
+            "(a < (d * 40)) & (abs(b) < 45) & (c > 10)"
         ]
     },
     {
@@ -143,7 +145,7 @@
             "c": "pullup:pitch"
         },
         "expressions": [
-            "(b > 5) & (a * 20 > b) | (a > 0.25) | (c > 45)"
+            "(b > 5) & ((a * -30) > b) | (c > 45)"
         ]
     }
 ]

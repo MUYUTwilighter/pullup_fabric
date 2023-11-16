@@ -21,7 +21,6 @@ import java.util.HashSet;
 public class Condition {
     private static final Logger LOGGER = Pullup.getLogger();
     public static final int DEFAULT_COLOR = new Color(255, 0, 0, 127).getRGB();
-    ;
 
     private final Identifier id;
     private final int checkDelay;
@@ -46,12 +45,7 @@ public class Condition {
                 int hudTextColor = DEFAULT_COLOR;
                 if (textMap.has("color")) {
                     final JsonObject color = textMap.get("color").getAsJsonObject();
-                    hudTextColor = new Color(
-                            color.has("red") ? color.get("red").getAsInt() : 0,
-                            color.has("green") ? color.get("green").getAsInt() : 0,
-                            color.has("blue") ? color.get("blue").getAsInt() : 0,
-                            color.has("alpha") ? color.get("alpha").getAsInt() : 255
-                    ).getRGB();
+                    hudTextColor = new Color(color.has("red") ? color.get("red").getAsInt() : 0, color.has("green") ? color.get("green").getAsInt() : 0, color.has("blue") ? color.get("blue").getAsInt() : 0, color.has("alpha") ? color.get("alpha").getAsInt() : 255).getRGB();
                 }
                 this.hudText = new ColoredText(text, hudTextColor);
             } else this.hudText = ColoredText.EMPTY;
@@ -67,10 +61,7 @@ public class Condition {
             if (this.isArgumentValid(key, value)) {
                 this.arguments.put(key, new Identifier(value));
             } else {
-                LOGGER.warn(
-                    String.format(
-                        "Argument mapping %s:%s is invalid, does argument id exists? Or variable got invalid character?",
-                        key, value));
+                LOGGER.warn(String.format("Argument mapping %s:%s is invalid, does argument id exists? Or variable got invalid character?", key, value));
             }
         }
 

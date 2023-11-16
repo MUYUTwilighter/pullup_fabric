@@ -1,9 +1,9 @@
 package cool.muyucloud.pullup.util.network;
 
 import cool.muyucloud.pullup.Pullup;
-import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import cool.muyucloud.pullup.util.Config;
 import cool.muyucloud.pullup.util.Registry;
+import cool.muyucloud.pullup.util.condition.ConditionLoader;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -13,7 +13,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;

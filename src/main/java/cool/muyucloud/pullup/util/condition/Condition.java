@@ -20,7 +20,7 @@ import java.util.HashSet;
 
 public class Condition {
     private static final Logger LOGGER = Pullup.getLogger();
-    private static final int DEFAULT_COLOR = new Color(255, 0, 0, 127).getRGB();
+    public static final int DEFAULT_COLOR = new Color(255, 0, 0, 127).getRGB();
     ;
 
     private final Identifier id;
@@ -50,7 +50,7 @@ public class Condition {
                             color.has("red") ? color.get("red").getAsInt() : 0,
                             color.has("green") ? color.get("green").getAsInt() : 0,
                             color.has("blue") ? color.get("blue").getAsInt() : 0,
-                            color.has("alpha") ? color.get("alpha").getAsInt() : 0
+                            color.has("alpha") ? color.get("alpha").getAsInt() : 255
                     ).getRGB();
                 }
                 this.hudText = new ColoredText(text, hudTextColor);

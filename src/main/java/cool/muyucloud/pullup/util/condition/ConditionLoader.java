@@ -36,7 +36,7 @@ public class ConditionLoader {
      */
     public ConditionLoader(String fileName) throws IOException {
         this.spaceName = getFileNoEx(fileName);
-        this.fileContent = readFile(Files.newInputStream(PATH.resolve("fileName")));
+        this.fileContent = readFile(Files.newInputStream(PATH.resolve(fileName)));
     }
 
     /**

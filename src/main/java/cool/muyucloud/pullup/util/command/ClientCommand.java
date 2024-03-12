@@ -72,7 +72,7 @@ public class ClientCommand {
             return 0;
         }
 
-        MutableText text = Text.translatable("command.pullup.client.load.specific.loading");
+        MutableText text = Text.translatable("command.pullup.client.load.specific.loading", name);
         source.sendFeedback(text);
         CONFIG.set("loadSet", name);
         Registry.CONDITIONS.clear();

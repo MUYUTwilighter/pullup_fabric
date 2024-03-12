@@ -1,151 +1,169 @@
 [
-    {
-        "name": "minimum",
-        "sound": "pullup:minimum",
-        "play_delay": 20,
-        "loop_play": false,
-        "hud_text": {
-            "key": "text.flighthud.pullup.minimum"
-        },
-        "check_delay": 5,
-        "arguments": {
-            "a": "pullup:relative_height"
-        },
-        "expressions": [
-            "0.5 - abs(a - 3)"
-        ]
+  {
+    "name": "minimum",
+    "sound": "pullup:minimum",
+    "play_delay": 20,
+    "loop_play": false,
+    "hud_text": {
+      "key": "text.flighthud.pullup.minimum"
     },
-    {
-        "name": "5",
-        "sound": "pullup:5",
-        "play_delay": 20,
-        "loop_play": false,
-        "hud_text": {
-            "key": "text.flighthud.pullup.5"
-        },
-        "check_delay": 5,
-        "arguments": {
-            "a": "pullup:relative_height"
-        },
-        "expressions": [
-            "1 - abs(a - 5)"
-        ]
+    "check_delay": 5,
+    "arguments": {
+      "ef": "pullup:elytra_flying",
+      "a": "pullup:relative_height"
     },
-    {
-        "name": "10",
-        "sound": "pullup:10",
-        "play_delay": 20,
-        "loop_play": false,
-        "hud_text": {
-            "key": "text.flighthud.pullup.10"
-        },
-        "check_delay": 5,
-        "arguments": {
-            "a": "pullup:relative_height"
-        },
-        "expressions": [
-            "1 - abs(a - 10)"
-        ]
+    "expressions": [
+      "ef",
+      "0.5 - abs(a - 3)"
+    ]
+  },
+  {
+    "name": "5",
+    "sound": "pullup:5",
+    "play_delay": 20,
+    "loop_play": false,
+    "hud_text": {
+      "key": "text.flighthud.pullup.5"
     },
-    {
-        "name": "20",
-        "sound": "pullup:20",
-        "play_delay": 20,
-        "loop_play": false,
-        "hud_text": {
-            "key": "text.flighthud.pullup.20"
-        },
-        "check_delay": 5,
-        "arguments": {
-            "a": "pullup:relative_height"
-        },
-        "expressions": [
-            "1 - abs(a - 20)"
-        ]
+    "check_delay": 5,
+    "arguments": {
+      "ef": "pullup:elytra_flying",
+      "a": "pullup:relative_height"
     },
-    {
-        "name": "30",
-        "sound": "pullup:30",
-        "play_delay": 20,
-        "loop_play": false,
-        "hud_text": {
-            "key": "text.flighthud.pullup.30"
-        },
-        "check_delay": 5,
-        "arguments": {
-            "a": "pullup:relative_height"
-        },
-        "expressions": [
-            "1 - abs(a - 30)"
-        ]
+    "expressions": [
+      "ef",
+      "1 - abs(a - 5)"
+    ]
+  },
+  {
+    "name": "10",
+    "sound": "pullup:10",
+    "play_delay": 20,
+    "loop_play": false,
+    "hud_text": {
+      "key": "text.flighthud.pullup.10"
     },
-    {
-        "name": "40",
-        "sound": "pullup:40",
-        "play_delay": 20,
-        "loop_play": false,
-        "hud_text": {
-            "key": "text.flighthud.pullup.40"
-        },
-        "check_delay": 5,
-        "arguments": {
-            "a": "pullup:relative_height"
-        },
-        "expressions": [
-            "1 - abs(a - 40)"
-        ]
+    "check_delay": 5,
+    "arguments": {
+      "ef": "pullup:elytra_flying",
+      "a": "pullup:relative_height"
     },
-    {
-        "name": "50",
-        "sound": "pullup:50",
-        "play_delay": 20,
-        "loop_play": false,
-        "hud_text": {
-            "key": "text.flighthud.pullup.50"
-        },
-        "check_delay": 5,
-        "arguments": {
-            "a": "pullup:relative_height"
-        },
-        "expressions": [
-            "1 - abs(a - 50)"
-        ]
+    "expressions": [
+      "ef",
+      "1 - abs(a - 10)"
+    ]
+  },
+  {
+    "name": "20",
+    "sound": "pullup:20",
+    "play_delay": 20,
+    "loop_play": false,
+    "hud_text": {
+      "key": "text.flighthud.pullup.20"
     },
-    {
-        "name": "terrain_ahead",
-        "sound": "pullup:terrain_ahead",
-        "play_delay": 20,
-        "loop_play": true,
-        "hud_text": {
-            "key": "text.flighthud.pullup.terrain_ahead"
-        },
-        "check_delay": 5,
-        "arguments": {
-            "a": "pullup:distance_ahead",
-            "b": "pullup:pitch",
-            "c": "pullup:relative_height",
-            "d": "pullup:speed"
-        },
-        "expressions": [
-            "(log10(d * 20) * 20 > a) & (abs(b) < 45) & (c > 10)"
-        ]
+    "check_delay": 5,
+    "arguments": {
+      "ef": "pullup:elytra_flying",
+      "a": "pullup:relative_height"
     },
-    {
-        "name": "sink_rate",
-        "sound": "pullup:sink_rate",
-        "play_delay": 20,
-        "loop_play": true,
-        "hud_text": {
-            "key": "text.flighthud.pullup.sink_rate"
-        },
-        "check_delay": 5,
-        "arguments": {
-            "a": "pullup:vertical_speed",
-            "b": "pullup:relative_height",
-            "c": "pullup:pitch"
-        },
-        "expressions": [
-            "(log10(-a * 20 - 1.5) * 20 > b) & (b > 10) | (c > 45)"
-        ]
-    }
+    "expressions": [
+      "ef",
+      "1 - abs(a - 20)"
+    ]
+  },
+  {
+    "name": "30",
+    "sound": "pullup:30",
+    "play_delay": 20,
+    "loop_play": false,
+    "hud_text": {
+      "key": "text.flighthud.pullup.30"
+    },
+    "check_delay": 5,
+    "arguments": {
+      "ef": "pullup:elytra_flying",
+      "a": "pullup:relative_height"
+    },
+    "expressions": [
+      "ef",
+      "1 - abs(a - 30)"
+    ]
+  },
+  {
+    "name": "40",
+    "sound": "pullup:40",
+    "play_delay": 20,
+    "loop_play": false,
+    "hud_text": {
+      "key": "text.flighthud.pullup.40"
+    },
+    "check_delay": 5,
+    "arguments": {
+      "ef": "pullup:elytra_flying",
+      "a": "pullup:relative_height"
+    },
+    "expressions": [
+      "ef",
+      "1 - abs(a - 40)"
+    ]
+  },
+  {
+    "name": "50",
+    "sound": "pullup:50",
+    "play_delay": 20,
+    "loop_play": false,
+    "hud_text": {
+      "key": "text.flighthud.pullup.50"
+    },
+    "check_delay": 5,
+    "arguments": {
+      "ef": "pullup:elytra_flying",
+      "a": "pullup:relative_height"
+    },
+    "expressions": [
+      "ef",
+      "1 - abs(a - 50)"
+    ]
+  },
+  {
+    "name": "terrain_ahead",
+    "sound": "pullup:terrain_ahead",
+    "play_delay": 20,
+    "loop_play": true,
+    "hud_text": {
+      "key": "text.flighthud.pullup.terrain_ahead"
+    },
+    "check_delay": 5,
+    "arguments": {
+      "ef": "pullup:elytra_flying",
+      "a": "pullup:distance_ahead",
+      "b": "pullup:pitch",
+      "c": "pullup:relative_height",
+      "d": "pullup:speed"
+    },
+    "expressions": [
+      "ef",
+      "(log10(d * 20) * 20 > a) & (abs(b) < 45) & (c > 10)"
+    ]
+  },
+  {
+    "name": "sink_rate",
+    "sound": "pullup:sink_rate",
+    "play_delay": 20,
+    "loop_play": true,
+    "hud_text": {
+      "key": "text.flighthud.pullup.sink_rate"
+    },
+    "check_delay": 5,
+    "arguments": {
+      "ef": "pullup:elytra_flying",
+      "a": "pullup:vertical_speed",
+      "b": "pullup:relative_height",
+      "c": "pullup:pitch"
+    },
+    "expressions": [
+      "ef",
+      "(log10(-a * 20 - 1.5) * 20 > b) & (b > 10) | (c > 45)"
+    ]
+  }
 ]

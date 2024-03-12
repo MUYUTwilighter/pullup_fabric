@@ -1,6 +1,7 @@
 package cool.muyucloud.pullup.access;
 
 import cool.muyucloud.pullup.util.condition.Condition;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.List;
 
@@ -39,10 +40,9 @@ public interface ClientPlayerEntityAccess {
     double getDeltaPitch();
 
     /**
-     * Get ticks since last beginning of flight.
-     * 1 tick = 50 ms
-     */
-    double getFlightTicks();
+     * Get distance from the player to the block where player's velocity points to
+     * */
+    double getDistanceForward();
 
     /**
      * Get pullup texts to be displayed on the flight hud

@@ -30,10 +30,6 @@ import java.util.*;
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends PlayerEntity implements ClientPlayerEntityAccess {
     @Shadow
-    @Override
-    public abstract float getYaw(float tickDelta);
-
-    @Shadow
     private float lastYaw;
     @Shadow
     private float lastPitch;
@@ -41,6 +37,9 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
     @Shadow
     @Override
     public abstract void tick();
+    @Shadow
+    @Override
+    public abstract float getYaw(float tickDelta);
 
     @Shadow
     @Final
@@ -51,8 +50,6 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
     private int ticks = 0;
     @Unique
     private boolean isNewTick = false;
-    @Unique
-    private long flightStart = new Date().getTime();
     @Unique
     private final HashMap<Identifier, ConditionTrigger> conditionTriggers = new HashMap<>();
     @Unique
@@ -78,6 +75,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
 
     @Unique
     private void checkConditions() {
+        Registry.PLAYER_ENTITY = this;
         for (Condition condition : Registry.CONDITIONS.getAll()) {
             if (this.ticks % condition.getCheckDelay() != 0) {
                 continue;
@@ -158,15 +156,8 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
 
     @Unique
     private void updateTick() {
-        if (!this.isFallFlying()) {
-            this.isNewTick = false;
-            this.ticks = 0;
-            this.flightStart = new Date().getTime();
-            return;
-        }
-
         long tmpTime = new Date().getTime();
-        int tmpTick = (int) ((tmpTime - this.flightStart) / 50);
+        int tmpTick = (int) (tmpTime / 50);
         this.isNewTick = tmpTick != this.ticks;
         this.ticks = tmpTick;
     }
@@ -217,8 +208,13 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity implements Cl
 
     @Unique
     @Override
-    public double getFlightTicks() {
-        return this.ticks;
+    public double getDistanceForward() {
+        int maxDistance = CONFIG.getAsInt("maxDistance");
+        Vec3d cameraPos = this.getCameraPosVec(0);
+        Vec3d rotation = this.getVelocity().normalize();
+        Vec3d endPos = rotation.multiply(maxDistance);
+        Vec3d target = this.getWorld().raycast(new RaycastContext(cameraPos, endPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this)).getPos();
+        return cameraPos.distanceTo(target);
     }
 
     @Unique

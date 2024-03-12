@@ -15,6 +15,7 @@ public class Registry<T> {
     public static final Registry<Argument> ARGUMENTS = new Registry<>();
     public static final Registry<Condition> CONDITIONS = new Registry<>();
     public static final Registry<Operator> OPERATORS = new Registry<>();
+    public static ClientPlayerEntityAccess PLAYER_ENTITY;
 
     public static void registerArguments() {
         ARGUMENTS.register(new Identifier("pullup:absolute_height"), (player, world) -> player.getY());
@@ -44,8 +45,9 @@ public class Registry<T> {
             (player, world) -> ((ClientPlayerEntityAccess) player).getPitchedDistanceAhead(0));
         ARGUMENTS.register(new Identifier("pullup:distance_horizontal"),
             (player, world) -> ((ClientPlayerEntityAccess) player).getDistanceHorizontal());
-        ARGUMENTS.register(new Identifier("pullup:flight_ticks"),
-            (player, world) -> ((ClientPlayerEntityAccess) player).getFlightTicks());
+        ARGUMENTS.register(new Identifier("pullup:distance_forward"), (player, world) -> ((ClientPlayerEntityAccess) player).getDistanceForward());
+        ARGUMENTS.register(new Identifier("pullup:elytra_flying"), (player, world) -> player.isFallFlying() ? 1 : -1);
+        ARGUMENTS.register(new Identifier("pullup:on_vehicle"), (player, world) -> player.hasVehicle() ? 1 : -1);
     }
 
     public static void registerOperators() {
@@ -103,7 +105,11 @@ public class Registry<T> {
         FUNCTIONS.register(new Identifier("pullup:pitched_distance"), new Function("pDistance") {
             @Override
             public double apply(double... args) {
-                return 0;
+                if (PLAYER_ENTITY == null) {
+                    return -1;
+                } else {
+                    return PLAYER_ENTITY.getPitchedDistanceAhead((float) args[0]);
+                }
             }
         });
     }

@@ -30,6 +30,9 @@ public class Pullup implements ModInitializer {
         LOGGER.info("Registering operators.");
         Registry.registerOperators();
 
+        LOGGER.info("Registering functions.");
+        Registry.registerFunctions();
+
         LOGGER.info("Registering events.");
         ServerLifecycleEvents.SERVER_STOPPING.register(this::onServerStopping);
 

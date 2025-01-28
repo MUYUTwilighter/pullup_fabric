@@ -1,3 +1,9 @@
+# 停止更新 Stopped Update
+
+该模组目前已暂停相关开发工作，除非有足够多的再开发请求或作者本人想开了。
+
+This mod will no longer receive any further update unless there are considerable amount of re-open request or the author (me) decided to re-open it.
+
 # Pullup 飞行警报
 
 一个高度定制化的模组，玩家在 Minecraft 鞘翅飞行时添加飞行警报。该模组开放了接口，可以让用户自定义各种检测条件与播放的音效。  
